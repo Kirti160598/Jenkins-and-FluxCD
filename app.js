@@ -1,7 +1,18 @@
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => res.send('Hello World!'));
+function greetUser(name) {
+  return `Hello, ${name}!`;
+}
 
-app.listen(8080, () => console.log('App listening on port 8080'));
-module.exports = app;
+app.get('/greet/:name', (req, res) => {
+  const message = greetUser(req.params.name);
+  res.send(message);
+});
+
+if (require.main === module) {
+  app.listen(8080, () => console.log('App listening on port 8080'));
+}
+
+module.exports = { app, greetUser };
+
