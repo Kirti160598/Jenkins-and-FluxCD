@@ -3,13 +3,13 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "kirtigupta1234/myapp:${BUILD_NUMBER}"
-        GITOPS_REPO = "git@github.com:kirtigupta1234/Jenkins-and-FluxCD.git"
+        GITOPS_REPO = "git@github.com:Kirti160598/Jenkins-and-FluxCD.git"
     }
 
     stages {
         stage('Checkout App') {
             steps {
-                git 'git@github.com:yourusername/app-repo.git'
+                git 'git@github.com:Kirti160598/Jenkins-and-FluxCD.git'
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                     sh 'docker push $DOCKER_IMAGE'
                 }
@@ -50,8 +50,8 @@ pipeline {
             steps {
                 sshagent (credentials: ['gitops-ssh-key']) {
                     sh '''
-                        git clone $GITOPS_REPO gitops-repo
-                        cd gitops-repo
+                        git clone $GITOPS_REPO Jenkins-and-FluxCD
+                        cd Jenkins-and-FluxCD
                         sed -i "s|image: .*|image: $DOCKER_IMAGE|" deployment.yaml
                         git add deployment.yaml
                         git commit -m "Update image to $DOCKER_IMAGE"
