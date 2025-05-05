@@ -1,4 +1,4 @@
-const { greetUser } = require('../../app');
+const { greetUser } = require('../app.js');
 
 describe('Unit test greetUser()', () => {
   test('returns greeting message', () => {
