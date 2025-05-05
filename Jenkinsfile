@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "kirtigupta1234/finos-traderX:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "kirtigupta1234/finos-traderx:${BUILD_NUMBER}"
         GITOPS_REPO = "https://github.com/Kirti160598/finos-traderX.git"
     }
 
