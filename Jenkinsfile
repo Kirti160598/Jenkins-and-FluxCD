@@ -7,11 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()  // Clean the workspace to ensure a fresh checkout
-            }
-        }
         stage('Checkout App') {
             steps {
                 git branch: 'main', url: 'https://github.com/Kirti160598/Jenkins-and-FluxCD.git'
