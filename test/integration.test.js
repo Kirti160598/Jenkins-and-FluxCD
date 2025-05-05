@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { app } = require('../../app');
+const { app } = require('../app.js');
 
 describe('Integration test GET /greet/:name', () => {
   test('responds with greeting message', async () => {
