@@ -48,17 +48,15 @@ pipeline {
 
         stage('Update GitOps Deployment YAML') {
             steps {
-                sshagent (credentials: ['gitops-ssh-key']) {
-                    sh '''
-                        git clone $GITOPS_REPO Jenkins-and-FluxCD
-                        cd Jenkins-and-FluxCD
-                        sed -i "s|image: .*|image: $DOCKER_IMAGE|" deployment.yaml
-                        git add deployment.yaml
-                        git commit -m "Update image to $DOCKER_IMAGE"
-                        git push origin main
-                    '''
-                }
-            }
-        }
+                sh '''
+                    cd $WORKSPACE
+                    sed -i "s|image: .*|image: $DOCKER_IMAGE|" deployment.yaml
+                    git add deployment.yaml
+                    git commit -m "Update image to $DOCKER_IMAGE"
+                    git push origin main
+        '''
+    }
+}
+
     }
 }
