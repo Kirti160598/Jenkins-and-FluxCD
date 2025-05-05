@@ -2,38 +2,22 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "kirtigupta1234/myapp:${BUILD_NUMBER}"
-        GITOPS_REPO = "https://github.com/Kirti160598/Jenkins-and-FluxCD.git"
+        DOCKER_IMAGE = "kirtigupta1234/finos-traderX:${BUILD_NUMBER}"
+        GITOPS_REPO = "https://github.com/Kirti160598/finos-traderX.git"
     }
 
     stages {
         stage('Checkout App') {
             steps {
-                git branch: 'main', url: 'https://github.com/Kirti160598/Jenkins-and-FluxCD.git'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
-        stage('Run Unit Tests') {
-            steps {
-                sh 'npm run test:unit'
-            }
-        }
-
-        stage('Run Integration Tests') {
-            steps {
-                sh 'npm run test:integration'
+                git branch: 'main', url: 'https://github.com/Kirti160598/finos-traderX.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
+                dir('database') {  // 👈 change working directory to 'database'
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                }
             }
         }
 
@@ -48,16 +32,16 @@ pipeline {
 
         stage('Update GitOps Deployment YAML') {
             steps {
-                sh '''
-                    cd $WORKSPACE/k8s
-                    echo $PWD
-                    sed -i "s|image: .*|image: $DOCKER_IMAGE|" deployment.yaml
-                    git add deployment.yaml
-                    git commit -m "Update image to $DOCKER_IMAGE"
-                    git push origin main
-        '''
-    }
-}
-
+                dir('database') {  // 👈 update deployment.yaml inside 'database'
+                    sh '''
+                        echo "Current Directory: $(pwd)"
+                        sed -i "s|image: .*|image: $DOCKER_IMAGE|" deployment.yaml
+                        git add deployment.yaml
+                        git commit -m "Update image to $DOCKER_IMAGE"
+                        git push origin main
+                    '''
+                }
+            }
+        }
     }
 }
