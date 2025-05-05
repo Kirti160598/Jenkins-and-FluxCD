@@ -3,13 +3,13 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "kirtigupta1234/myapp:${BUILD_NUMBER}"
-        GITOPS_REPO = "git@github.com:Kirti160598/Jenkins-and-FluxCD.git"
+        GITOPS_REPO = "https://github.com/Kirti160598/Jenkins-and-FluxCD.git"
     }
 
     stages {
         stage('Checkout App') {
             steps {
-                git 'git@github.com:Kirti160598/Jenkins-and-FluxCD.git'
+                git 'https://github.com/Kirti160598/Jenkins-and-FluxCD.git'
             }
         }
 
