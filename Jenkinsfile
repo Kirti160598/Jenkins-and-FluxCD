@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout App') {
             steps {
-                git 'https://github.com/Kirti160598/Jenkins-and-FluxCD.git'
+                git branch: 'main', url: 'https://github.com/Kirti160598/Jenkins-and-FluxCD.git'
             }
         }
 
