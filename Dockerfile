@@ -3,6 +3,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --only=production
 COPY . .
-EXPOSE 8080
+EXPOSE 80
 CMD ["node", "app.js"]
 
