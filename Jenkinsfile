@@ -50,7 +50,7 @@ pipeline {
             steps {
                 sh '''
                     cd $WORKSPACE
-                    echo $pwd
+                    echo $PWD
                     sed -i "s|image: .*|image: $DOCKER_IMAGE|" k8s/deployment.yaml
                     git add deployment.yaml
                     git commit -m "Update image to $DOCKER_IMAGE"
