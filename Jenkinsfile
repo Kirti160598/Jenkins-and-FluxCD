@@ -54,9 +54,9 @@ pipeline {
         stage('Update GitOps Deployment YAML') {
             steps {
                 sh '''
-                    cd $WORKSPACE
+                    cd $WORKSPACE/k8s
                     echo $PWD
-                    sed -i "s|image: .*|image: $DOCKER_IMAGE|" k8s/deployment.yaml
+                    sed -i "s|image: .*|image: $DOCKER_IMAGE|" deployment.yaml
                     git add deployment.yaml
                     git commit -m "Update image to $DOCKER_IMAGE"
                     git push origin main
